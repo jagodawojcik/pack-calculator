@@ -190,7 +190,7 @@ On merge to main terraform apply is performed.
 - **Authentication & Rate Limiting** - Protect API from abuse
 - **Use Workload Identity Federation** - Use WIF instead of Service Account Key for Terraform deployments
 - **If staying single-endpoint**: Could migrate core logic to Cloud Functions
-- **If expanding features**: Currently changing pack size requirest redeployment, if we wanted to avoid that we could add metadata service for retrieving pack sizes dynamically (trade-off: adds latency)
+- **If expanding features**: Currently changing pack size requires redeployment, if we wanted to avoid that we could add metadata service for retrieving pack sizes dynamically (trade-off: adds latency)
 
 ## 💻 Local Development
 
