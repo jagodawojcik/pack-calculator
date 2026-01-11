@@ -81,7 +81,7 @@ resource "google_cloud_run_v2_service" "packs_server" {
     }
   }
   scaling {
-    max_instance_count = 10
+    max_instance_count = 5
   }
   deletion_protection = false # Keep experimental
 }

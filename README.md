@@ -165,7 +165,7 @@ The solution is deployed on **Google Cloud** using the $300 free tier allowance.
 The service is configured with:
 
 - **Min Instances**: 0 → Zero cost when idle
-- **Max Instances**: 10 → Automatically scales to handle traffic spikes
+- **Max Instances**: 5 → Automatically scales to handle traffic spikes
 - **Resources per Instance**: 2 CPU cores, 8GB memory
 
 ## ⚙️ Configuration
