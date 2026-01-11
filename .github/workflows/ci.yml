@@ -1,4 +1,4 @@
-name: App Build & Terraform Plan
+name: Build & Plan
 
 on:
   pull_request:
