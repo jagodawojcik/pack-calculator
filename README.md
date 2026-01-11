@@ -26,7 +26,7 @@ This repository hosts a solution for the Gymshark coding challenge. The task inv
 
 This solution meets all the key and optional requirements. The service can be accessed online via a basic UI:
 
-[https://packs-service-[REGION]-[PROJECT-ID].a.run.app/packs](https://cloud.google.com/run)
+https://jagodawojcik.github.io/pack-calculator/
 
 The backend URL:
 
