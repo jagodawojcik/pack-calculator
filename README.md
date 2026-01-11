@@ -202,6 +202,7 @@ TODO
 - **Docker Image Optimization** - Current image is very small ~32.4 MB; possibly could use `distroless` images to further reduce image size and cold start latency
 - **Caching** - Add in-memory cache for frequently requested quantities (popular order sizes). Also we could add caching for the DP table.
 - **Authentication & Rate Limiting** - Protect API from abuse
+- **Use Workload Identity Federation** - Use WIF instead of Service Account Key for Terraform deployments
 - **If staying single-endpoint**: Could migrate core logic to Cloud Functions
 - **If expanding features**: Currently changing pack size requirest redeployment, if we wanted to avoid that we could add metadata service for retrieving pack sizes dynamically (trade-off: adds latency)
 
