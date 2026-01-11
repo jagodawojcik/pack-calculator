@@ -117,7 +117,7 @@ curl "https://packs-service-253100512672.europe-west2.run.app/packs?quantity=250
 
 ---
 
-## Algorithm: Pack Calculation Strategy
+## 🧮 Algorithm: Pack Calculation Strategy
 
 The pack calculation algorithm uses **dynamic programming** to find the optimal solution:
 
@@ -150,7 +150,7 @@ For most practical e-commerce scenarios, this limit is more than sufficient.
 
 ---
 
-## Infrastructure & Deployment
+## ☁️ Infrastructure & Deployment
 
 The solution is deployed on **Google Cloud** using the $300 free tier allowance. The following components were selected:
 
@@ -168,7 +168,7 @@ The service is configured with:
 - **Max Instances**: 10 → Automatically scales to handle traffic spikes
 - **Resources per Instance**: 2 CPU cores, 8GB memory
 
-## Configuration
+## ⚙️ Configuration
 
 ### Pack Sizes
 
@@ -196,9 +196,7 @@ TODO
 
 TODO
 
-## Future Improvements & Considerations
-
-### Short-term Enhancements
+## 🚀 Future Improvements & Considerations
 
 - **Unit Tests** - Currently not included due to time constraints, but essential for production
 - **Docker Image Optimization** - Current image is very small ~32.4 MB; possibly could use `distroless` images to further reduce image size and cold start latency
@@ -207,7 +205,7 @@ TODO
 - **If staying single-endpoint**: Could migrate core logic to Cloud Functions
 - **If expanding features**: Currently changing pack size requirest redeployment, if we wanted to avoid that we could add metadata service for retrieving pack sizes dynamically (trade-off: adds latency)
 
-## Local Development
+## 💻 Local Development
 
 ### Prerequisites
 
