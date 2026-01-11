@@ -19,7 +19,7 @@
 
       async function calculatePacks() {
         const quantity = document.getElementById("quantity").value;
-        if (!quantity) return alert("Enter a quantity");
+        if (!quantity) return alert("Enter a positive integer quantity");
 
         try {
           const response = await fetch(`${baseUrl}/packs?quantity=${quantity}`);
