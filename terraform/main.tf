@@ -75,7 +75,7 @@ resource "google_cloud_run_v2_service" "packs_server" {
         resources {
         limits = {
             cpu    = "2"
-            memory = "8Gi"
+            memory = "4Gi"
         }
         }
     }
