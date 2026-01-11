@@ -186,7 +186,7 @@ On merge to main terraform apply is performed.
 
 - **Unit Tests** - Currently not included due to time constraints, but essential for production
 - **Docker Image Optimization** - Current image is very small ~32.4 MB; possibly could use `distroless` images to further reduce image size and cold start latency
-- **Caching** - Add in-memory cache for frequently requested quantities (popular order sizes). Also we could add caching for the DP table.
+- **Caching** - Add in-memory cache for frequently requested quantities (popular order sizes). We could also add caching for the DP table.
 - **Authentication & Rate Limiting** - Protect API from abuse
 - **Use Workload Identity Federation** - Use WIF instead of Service Account Key for Terraform deployments
 - **If staying single-endpoint**: Could migrate core logic to Cloud Functions
