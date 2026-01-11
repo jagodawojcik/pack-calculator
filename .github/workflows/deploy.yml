@@ -1,9 +1,12 @@
-name: Build & Plan
+name: Deploy - Terraform Apply
 
-on: pull_request
+on:
+  push:
+    branches:
+      - main
 
 jobs:
-  build-and-plan:
+  deploy:
     runs-on: ubuntu-latest
 
     steps:
@@ -19,13 +22,20 @@ jobs:
         with:
           project_id: ${{ secrets.GCP_PROJECT_ID }}
 
+      - name: Configure Docker auth for GAR
+        run: |
+          gcloud auth configure-docker ${{ secrets.GCP_REGION }}-docker.pkg.dev --quiet
+
+      - name: Build & Push Docker Image
+        run: |
+          IMAGE="${{ secrets.GCP_REGION }}-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/packs-service-repo/packs-server:dev"
+          docker build -t $IMAGE .
+          docker push $IMAGE
+
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v3
         with:
           terraform_version: 1.14.0
-
-      - name: Docker build (no push)
-        run: docker build -t packs-server:test .
 
       - name: Terraform Init
         working-directory: terraform
@@ -37,3 +47,10 @@ jobs:
           TF_VAR_project_id: ${{ secrets.GCP_PROJECT_ID }}
           TF_VAR_region: ${{ secrets.GCP_REGION }}
         run: terraform plan -lock-timeout=20s
+
+      - name: Terraform Apply
+        working-directory: terraform
+        env:
+          TF_VAR_project_id: ${{ secrets.GCP_PROJECT_ID }}
+          TF_VAR_region: ${{ secrets.GCP_REGION }}
+        run: terraform apply -auto-approve -lock-timeout=120s

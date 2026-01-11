@@ -1,8 +1,3 @@
-variable "iac_service_account_email" {
-  description = "Service account for Terraform deployment"
-  type        = string
-}
-
 variable "project_id" {
   description = "GCP project ID to deploy resources into"
   type        = string
