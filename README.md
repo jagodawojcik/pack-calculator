@@ -32,7 +32,7 @@ The backend URL:
 
 https://packs-service-253100512672.europe-west2.run.app/health
 
-The following sections break down the app into components with explanations of the algorithm used to calculate packs and the deployment architecture.
+See the following sections for more detailed app documentation.
 
 ## 🔎 Table of Contents
 
@@ -41,7 +41,7 @@ The following sections break down the app into components with explanations of t
 - [Algorithm: Pack Calculation Strategy](#algorithm-pack-calculation-strategy)
 - [Infrastructure & Deployment](#infrastructure--deployment)
 - [Configuration](#configuration)
-- [CI/CD Pipeline (In Progress)](#cicd-pipeline-in-progress)
+- [CI/CD Pipeline](#cicd-pipeline)
 - [Future Improvements & Considerations](#future-improvements--considerations)
 - [Local Development](#local-development)
 
@@ -123,12 +123,12 @@ The pack calculation algorithm uses **dynamic programming** to find the optimal 
 
 ### Algorithm Steps
 
-1. **Exact Match Check**: If the order quantity exactly matches a pack size, return 1 pack of that size immediately (instant solution).
+1. **Exact Match Check**: If the order quantity exactly matches a pack size, return 1 pack of that size immediately.
 
 2. **Dynamic Programming Table**: Build a DP table where `best[target]` stores the best solution for reaching that target quantity:
 
    - Iterates from 1 up to the requested quantity
-   - For each target, considers all available pack sizes
+   - For each target considers all available pack sizes
    - Selects the pack that satisfies constraints in priority order:
      - Minimizes total items shipped (primary constraint)
      - Then minimizes number of packs (secondary constraint)
@@ -146,27 +146,25 @@ Where N = order quantity and M = number of pack sizes:
 
 The API restricts orders to a maximum of **10,000,000 items** to prevent excessive memory consumption (DP table size).
 
-For most practical e-commerce scenarios, this limit is more than sufficient.
+For most practical e-commerce scenarios, this limit should be sufficient.
 
 ---
 
 ## ☁️ Infrastructure & Deployment
 
-The solution is deployed on **Google Cloud** using the $300 free tier allowance. The following components were selected:
-
-### Core Services
+The solution is deployed on **Google Cloud** using the $300 free tier allowance. The following components were selected to deploy:
 
 1. **Google Cloud Run** - Serverless container platform hosting the API
 2. **Google Artifact Registry** - Docker image repository
 3. **GitHub Pages** - Static hosting for the UI (index.html, styles.css)
 4. **Terraform** - Infrastructure as Code
-5. **GitHub Actions** - CI/CD pipeline (TODO)
+5. **GitHub Actions** - CI/CD pipeline
 
 The service is configured with:
 
 - **Min Instances**: 0 → Zero cost when idle
 - **Max Instances**: 5 → Automatically scales to handle traffic spikes
-- **Resources per Instance**: 2 CPU cores, 8GB memory
+- **Resources per Instance**: 2 CPU cores, 4GB memory
 
 ## ⚙️ Configuration
 
@@ -174,27 +172,15 @@ The service is configured with:
 
 Pack sizes are read from the `PACK_SIZES` environment variable, allowing changes **without modifying source code**, but requires redeployment.
 
-Pack sizes are configured in [terraform/variables.tf](terraform/variables.tf#L14):
-
-```hcl
-variable "pack_sizes" {
-  description = "List of pack sizes"
-  type        = list(string)
-  default     = ["250", "500", "1000", "2000", "5000"]
-}
-```
-
-The Terraform configuration passes this to Cloud Run via the `PACK_SIZES` environment variable in [terraform/main.tf](terraform/main.tf#L69).
-
-**Workflow for changing pack sizes:**
-
-TODO
+Pack sizes are configured in [terraform/variables.tf](terraform/variables.tf#L14). The Terraform passes this to Cloud Run via the `PACK_SIZES` environment variable in [terraform/main.tf](terraform/main.tf#L69).
 
 ---
 
-## CI/CD Pipeline (In Progress)
+## CI/CD Pipeline
 
-TODO
+An automated CI/CD pipeline is available.
+On every pull request the pipeline will perform docker build and terraform plan.
+On merge to main terraform apply is performed.
 
 ## 🚀 Future Improvements & Considerations
 
@@ -208,21 +194,11 @@ TODO
 
 ## 💻 Local Development
 
-### Prerequisites
-
-- Go 1.25+
-- Docker (optional, for containerized testing)
-
 ### Running the Server
 
 ```bash
-# Clone and navigate to project
-git clone <repo-url>
-cd gs-project
-
 # Run with custom pack sizes
 PACK_SIZES="250,500,1000,2000,5000" go run ./cmd/server
-
 # Server runs on http://localhost:8080
 ```
 
@@ -237,13 +213,11 @@ curl "http://localhost:8080/packs?quantity=251"
 curl "http://localhost:8080/packs?quantity=1501"
 ```
 
-### Running with Docker Locally
+### Running with Docker
 
 ```bash
-# Build image
 docker build -t packs-server:latest .
 
-# Run container
 docker run -p 8080:8080 -e PACK_SIZES="250,500,1000,2000,5000" packs-server:latest
 ```
 
