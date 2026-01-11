@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Packs Calculator</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="container">
+      <h2>Packs Calculator</h2>
+      <input type="number" id="quantity" placeholder="Enter quantity" />
+      <br />
+      <button onclick="calculatePacks()">Calculate</button>
+      <pre id="result"></pre>
+    </div>
+
+    <script>
+      const baseUrl = "xxx";
+
+      async function calculatePacks() {
+        const quantity = document.getElementById("quantity").value;
+        if (!quantity) return alert("Enter a quantity");
+
+        try {
+          const response = await fetch(`${baseUrl}/packs?quantity=${quantity}`);
+
+          const text = await response.text();
+
+          if (!response.ok) {
+            throw new Error(text);
+          }
+
+          const data = JSON.parse(text);
+          document.getElementById("result").textContent = JSON.stringify(
+            data,
+            null,
+            2
+          );
+        } catch (err) {
+          document.getElementById("result").textContent =
+            "Error: " + err.message;
+        }
+      }
+    </script>
+  </body>
+</html>
