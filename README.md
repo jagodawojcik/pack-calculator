@@ -1,6 +1,8 @@
 # 📦 ✈️ Product Shipping Pack Calculator Service
 
-This repository hosts a solution for the Gymshark coding challenge. The task involved building an application that determines the minimum number of packs needed to fulfill customer orders, given fixed pack sizes: 250, 500, 1000, 2000, and 5000.
+> ⚠️ NOTE: The Google Cloud deployment is now taken down to avoid extra cost and is currently unavailable. If someone tries the deployed URL, it will not work; run locally instead. ⚠️
+
+This repository contains a Go implementation for a pack optimization challenge. It computes the smallest combination of whole packs (250, 500, 1000, 2000, 5000) to satisfy an order quantity with minimal overage.
 
 **Key Task Requirements**
 
@@ -126,7 +128,6 @@ The pack calculation algorithm uses **dynamic programming** to find the optimal 
 1. **Exact Match Check**: If the order quantity exactly matches a pack size, return 1 pack of that size immediately (instant solution).
 
 2. **Dynamic Programming Table**: Build a DP table where `best[target]` stores the best solution for reaching that target quantity:
-
    - Iterates from 1 up to the requested quantity
    - For each target, considers all available pack sizes
    - Selects the pack that satisfies constraints in priority order:
